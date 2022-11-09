@@ -1,0 +1,2 @@
+Gleitkommazahlen werden gerundet (Nachkommastellen abgeschnitten)
+Wenn die Zahl dann wieder Multipliziert wird kommt bei Gleitkommazahlen eine kleinere Zahl raus
