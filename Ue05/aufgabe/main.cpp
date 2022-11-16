@@ -1,6 +1,5 @@
 #include "utils/myPolynomial.hpp"
 
-#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -12,7 +11,7 @@ int main() {
     constexpr auto infile = "/YourHomePath/Ue05/vertikal.dat";
     constexpr auto outfileEnd = "/YourHomePath/Ue05/plots/endpunkt.dat";
     constexpr auto outfilePoly = "/YourHomePath/Ue05/plots/Polynominterpol.dat";
-    double epsilon = std::pow(10, -10);
+    double epsilon = 1e-10;
     std::cout << "Epsilon: " << epsilon << "\n";
 
     std::ifstream in(infile);
@@ -57,9 +56,9 @@ int main() {
     }
 
     // All Calculations:
-    std::ofstream out(outfilePoly);
-    std::vector<double> tauM = Stuetzstellen(tm[0], tm[tm.size()-1], 1000);
     // Interpolations
+    std::vector<double> tauM = Stuetzstellen(tm[0], tm[tm.size()-1], 1000);
+    std::ofstream out(outfilePoly);
     for(const auto& tau : tauM) {
         out << tau << " " << Polynom(tau, tm, zm) << " " << Polynom(tau, tm, xm) << "\n";
     }
