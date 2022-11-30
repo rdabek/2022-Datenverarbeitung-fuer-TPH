@@ -50,7 +50,7 @@ namespace experiment {
             int capacity = 0;
     };
 
-    inline auto operator<<(std::ostream& os, Data data) -> std::ostream& {
+    inline auto operator<<(std::ostream& os, const Data& data) -> std::ostream& {
         os << data.toSting();
         return os;
     }
