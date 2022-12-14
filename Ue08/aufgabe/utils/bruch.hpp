@@ -26,7 +26,7 @@ class bruch {
 
         auto set_n(auto) -> void = delete;                      // Delete implicit conversion
 
-        auto set_n(int numerator) -> void;
+        auto set_n(int denumerator) -> void;
 
         auto set_d(int denumerator) -> void;
 
@@ -41,8 +41,8 @@ class bruch {
     private:
         auto num() -> double;
 
-        const std::regex divisionRegex = std::regex("^[0-9]+\\/[0-9]+$");    // Match specified format -> e.g. 234/234 and nothing else
-                                                                                // Some fancy black magic
+        const std::regex divisionRegex = std::regex("^[0-9]+\\/[0-9]+$");   // Match specified format -> e.g. 234/234 and nothing else
+                                                                            // Some fancy black magic
         int numerator, denumerator;
         double number;
 };

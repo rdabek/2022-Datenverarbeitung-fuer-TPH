@@ -68,8 +68,10 @@ auto bruch::operator+=(const bruch& other) -> bruch& {
     return *this;
 }
 
-auto bruch::set_n(int numerator) -> void {
-    this->numerator = numerator;
+auto bruch::set_n(int denumerator) -> void {
+    if(denumerator == 0)
+        throw std::runtime_error("Divide by 0!");
+    this->denumerator = denumerator;
     number = num();
 }
 
