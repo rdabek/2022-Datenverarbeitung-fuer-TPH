@@ -5,12 +5,12 @@ Die Grundlogik habe ich in der main() Funktion verbaut. Als erstes werden die Da
 danach aus 'U235nf_fp.txt' ausgelesen und in eine std::map geschrieben. Die Hashmap habe ich ausgewählt, da sie meiner Meinung
 nach die passendste Datenstruktur für einen Datensatz an Attributen ist. Der Vorteil ist, dass ich mithilfe meiner Struktur
 AtomicNumbers (eine Bezeichnung für std::pair<int, int>) die Attribute der Atome sehr leicht aus der Map auslesen kann.
-Die zweite Map mit den Wahrscheinlichkeiten entstand aus dem selben Grund, wobei das std::string für das Symbol des Kerns steht.
+Die zweite Map mit den Wahrscheinlichkeiten entstand aus demselben Grund, wobei das std::string für das Symbol des Kerns steht.
 
 Für Eigenschaften der Atome habe ich eine eigene Struktur mit dem Namen AtomicProperties erstellt.
 Die Eigenschaften sind das Symbol des Atomes, die optionale Halbwärtszeit (es gibt stabile Atome), wie auch die Art des
 Zustandes (stabil, instabil - mit der Spaltungsmethode). Der Zustand wird auch in einer Map gespeichert, da der
-[] operator einen neuen Eintrag instanziert, falls keiner bei einem eingegebenen key existiert, was recht praktisch ist.
+[] operator einen neuen Eintrag instanziiert, falls keiner bei einem eingegebenen key existiert, was recht praktisch ist.
 
 Um das Arbeiten mit den Attributen zu erleichtern habe ich eine Enumeration für den Zustand erstellt. Außerdem auch einige
 Hilfsfunktionen, wie
@@ -34,7 +34,7 @@ Um die Spaltreihe zu berechnen muss jetzt nur der ganze Prozess so lange ablaufe
 
 Für den Poisson Prozess gibt es einige Hilfsfunktionen. 'poissonProcess' führt so lange bernoulli Versuche durch, bis true zurückgegeben wird,
 oder das Limit an Versuchen erreicht wird (hardgecoded auf 10000). Der Rückgabewert ist in dem Fall die Anzahl an durchlaufenen Intervallen dt.
-Somit kann der Zeitpunkt der Spaltung berechnet werden: dt*retTimeIntervals. 'calcLambda' berechnet den Lambda wert laut in der Angabe angegebenen
+Somit kann der Zeitpunkt der Spaltung berechnet werden: dt*retTimeIntervals. 'calcLambda' berechnet den Lambda Wert laut in der Angabe angegebenen
 Formel. Hier ist aber das Format auf Sekunden festgelegt, deswegen müsste entweder das Limit an Intervallen vergrößert werden um z.B. das
 Format 'a' zu unterstützen, oder Lambda in a berechnet werden. Das könnte ich auch noch automatisieren, aber es war meiner Meinung
 nach nicht mehr den Aufwand wert.

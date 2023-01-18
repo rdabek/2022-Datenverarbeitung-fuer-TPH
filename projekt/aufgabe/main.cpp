@@ -61,8 +61,13 @@ auto poissonOfAtom(const AtomicNumbers& aNum, const std::map<AtomicNumbers, Atom
         paths.push_back(std::filesystem::weakly_canonical("../../plots/" + atomToString(aNum, atomAttributes)).c_str());
 
         std::ofstream output(std::filesystem::weakly_canonical(outFilePath));
+        int sum = 0;
         for(const auto& [decayTime, count] : histo) {
-            output << decayTime << " " << count << "\n";
+            sum += count;
+        }
+
+        for(const auto& [decayTime, count] : histo) {
+            output << decayTime << " " << (double)count/(double)sum << "\n";
         }
         output.close();
     }
@@ -76,7 +81,7 @@ auto poissonOfAtom(const AtomicNumbers& aNum, const std::map<AtomicNumbers, Atom
         gp << "set terminal png size " << width << ", " << height << " enhanced font \"Helvetica,20\"\n";
         gp << "set output '" << outFilePath << ".png'\n";
         gp << "set xlabel 'decay in s'\n";
-        gp << "set ylabel 'amount of decays'\n";
+        gp << "set ylabel 'probability of decay'\n";
         gp << "plot '" << outFilePath << ".dat' using 1:2 smooth freq with boxes title 'decay from data file'\n";
     }
     std::cout << "Done creating gnuplots.\n";
