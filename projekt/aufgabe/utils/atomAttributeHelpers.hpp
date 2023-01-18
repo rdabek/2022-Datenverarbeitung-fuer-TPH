@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 
-namespace myproject {
+namespace myAtomic {
 
     enum Decay {
         st,
@@ -34,5 +34,7 @@ namespace myproject {
     auto loadAtomAttributes(const std::filesystem::path& fileName) -> std::map<AtomicNumbers, AtomicProperties>;
 
     auto loadUraniumDecayAtoms(const std::filesystem::path& fileName) -> std::map<AtomicNumbers, AtomicProbability>;
+
+    auto atomToString(const AtomicNumbers& atom, const std::map<AtomicNumbers, AtomicProperties>& atomAttributes) -> std::string;
 
 }

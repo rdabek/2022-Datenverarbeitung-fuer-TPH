@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace myproject {
+namespace myAtomic {
 
     auto convertToSeconds(double num, const char format) -> std::chrono::duration<double> {
         std::chrono::duration<double> time;
@@ -155,6 +155,11 @@ namespace myproject {
         }
 
         return retUraniumDecay;
+    }
+
+    auto atomToString(const AtomicNumbers& atom, const std::map<AtomicNumbers, AtomicProperties>& atomAttributes) -> std::string {
+        std::string ret = std::to_string(std::get<0>(atom)) + "-" + atomAttributes.at(atom).name + "-" + std::to_string(std::get<1>(atom));
+        return ret;
     }
 
 }
