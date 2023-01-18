@@ -11,6 +11,16 @@
 using namespace myAtomic;
 using namespace myDecay;
 
+auto printDecayChain(const AtomicNumbers& aNum, const std::map<AtomicNumbers, AtomicProperties>& atomAttributes, std::mt19937& gen) -> void {
+    auto iteratingAtom = aNum;
+    std::cout << "Decay chain of " << atomToString(iteratingAtom, atomAttributes) << ":\n";
+    while(!isStable(iteratingAtom, atomAttributes)) {
+        iteratingAtom = decayAtom(iteratingAtom, atomAttributes, gen);
+        std::cout << atomToString(iteratingAtom, atomAttributes) << "\n";
+    }
+    std::cout << "\n";
+}
+
 auto poissonProcess(std::mt19937& gen, double lambda, int numberOfIntervals) -> int {
     std::bernoulli_distribution bernoulliDist(lambda);
     int retTimeIntervals=0;
@@ -26,16 +36,6 @@ auto calcLambda(double halftime) -> double {
     return log(2.0)/halftime;
 }
 
-auto printDecayChain(const AtomicNumbers& aNum, const std::map<AtomicNumbers, AtomicProperties>& atomAttributes, std::mt19937& gen) -> void {
-    auto iteratingAtom = aNum;
-    std::cout << "Decay chain of " << atomToString(iteratingAtom, atomAttributes) << ":\n";
-    while(!isStable(iteratingAtom, atomAttributes)) {
-        iteratingAtom = decayAtom(iteratingAtom, atomAttributes, gen);
-        std::cout << atomToString(iteratingAtom, atomAttributes) << "\n";
-    }
-    std::cout << "\n";
-}
-
 auto poissonOfAtom(const AtomicNumbers& aNum, const std::map<AtomicNumbers, AtomicProperties>& atomAttributes, std::mt19937& gen) -> void {
     // Poisson on 10000 particles of 34-Se-86
     std::map<AtomicNumbers, std::map<int, int>> histoDecayTime;
@@ -45,7 +45,7 @@ auto poissonOfAtom(const AtomicNumbers& aNum, const std::map<AtomicNumbers, Atom
             auto histo = histoDecayTime[iteratingAtom];
             if(atomAttributes.at(iteratingAtom).halftime.has_value()) {
                 auto lambda = calcLambda(atomAttributes.at(iteratingAtom).halftime.value().count());
-                auto decayAfterSec = poissonProcess(gen, lambda, 1000);
+                auto decayAfterSec = poissonProcess(gen, lambda, 10000);
                 ++histo[decayAfterSec];
                 histoDecayTime[iteratingAtom] = histo;
             }
@@ -85,11 +85,11 @@ auto poissonOfAtom(const AtomicNumbers& aNum, const std::map<AtomicNumbers, Atom
 auto main() -> int {
     std::mt19937 gen(0);
 
+    // Read files
     const auto atomAttributes = loadAtomAttributes("../../Nuklide.txt");
     const auto uraniumDecay = loadUraniumDecayAtoms("../../U235nf_fp.txt");
 
     std::cout << "Printing nuclei properties:\n";
-
     for(const auto& [aNum, aProp] : atomAttributes) {
         // Print atom name and atomic numbers
         std::cout << std::get<0>(aNum) << "-" << aProp.name << "-" << std::get<1>(aNum);
@@ -122,6 +122,7 @@ auto main() -> int {
         printDecayChain(atoms.at(atom(gen)), atomAttributes, gen);
     }
 
+    // Simulate atomic decay with poisson
     poissonOfAtom(AtomicNumbers(34, 86), atomAttributes, gen);
     std::cout << "\n";
     poissonOfAtom(AtomicNumbers(41, 104), atomAttributes, gen);
