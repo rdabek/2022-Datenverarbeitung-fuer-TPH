@@ -1,0 +1,13 @@
+Needs: 
+
+- include header file:   
+gnuplot-iostream.h
+
+Install C++ boost libary + devel stuff
+- libboost_iostream + devel
+ _filesystem + devel
+ _ system + devel
+
+
+Compilation:
+g++ -o tst example-misc.cc -lboost_iostreams -lboost_system -lboost_filesystem -std=c++17
